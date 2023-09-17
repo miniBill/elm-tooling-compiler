@@ -22,7 +22,7 @@ RUN apk add --no-cache \
 RUN curl https://downloads.haskell.org/~ghcup/0.1.18.0/x86_64-linux-ghcup-0.1.18.0 -o /usr/local/bin/ghcup && chmod a+x /usr/local/bin/ghcup
 
 # Setup GHC
-RUN ghcup install ghc 9.0.2 --set
+RUN ghcup install ghc 9.4.5 --set
 RUN ghcup install cabal 3.6.2.0 --set
 
 ENV PATH="${PATH}:/root/.ghcup/bin"
