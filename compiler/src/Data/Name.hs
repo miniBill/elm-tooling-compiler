@@ -234,35 +234,34 @@ writeDigitsAtEnd !mba !oldOffset !n =
 -- FROM TYPE VARIABLE
 
 
-
 fromTypeVariable :: Name -> Int -> Name
 fromTypeVariable name@(Utf8.Utf8 ba#) index =
-  if index <= 0
-    then name
+  if index <= 0 then
+    name
+  else
+    let
+      len# = sizeofByteArray# ba#
+      end# = indexWord8Array# ba# (len# -# 1#)
+    in
+    if isTrue# (leWord8# (wordToWord8# 0x30##) end#) && isTrue# (leWord8# end# (wordToWord8# 0x39##)) then
+      runST
+      (
+        do  let !size = I# len# + 1 + getIndexSize index
+            mba <- newByteArray size
+            copyToMBA name mba
+            writeWord8 mba (I# len#) 0x5F {- _ -}
+            writeDigitsAtEnd mba size index
+            freeze mba
+      )
     else
-      let len# = sizeofByteArray# ba#
-          end# = indexWord8Array# ba# (len# -# 1#)
-       in if isTrue# (leWord8# (wordToWord8# 0x30##) end#) && isTrue# (leWord8# end# (wordToWord8# 0x39##))
-            then
-              runST
-                ( do
-                    let !size = I# len# + 1 + getIndexSize index
-                    mba <- newByteArray size
-                    copyToMBA name mba
-                    writeWord8 mba (I# len#) 0x5F {- _ -}
-                    writeDigitsAtEnd mba size index
-                    freeze mba
-                )
-            else
-              runST
-                ( do
-                    let !size = I# len# + getIndexSize index
-                    mba <- newByteArray size
-                    copyToMBA name mba
-                    writeDigitsAtEnd mba size index
-                    freeze mba
-                )
-
+      runST
+      (
+        do  let !size = I# len# + getIndexSize index
+            mba <- newByteArray size
+            copyToMBA name mba
+            writeDigitsAtEnd mba size index
+            freeze mba
+      )
 
 
 
@@ -305,26 +304,30 @@ fromManyNames names =
   case names of
     [] ->
       blank
-    -- NOTE: this case is needed for (let _ = Debug.log "x" x in ...)
-    -- but maybe unused patterns should be stripped out instead
+      -- NOTE: this case is needed for (let _ = Debug.log "x" x in ...)
+      -- but maybe unused patterns should be stripped out instead
 
     Utf8.Utf8 ba# : _ ->
-      let len# = sizeofByteArray# ba#
-       in runST
-            ( ST $ \s ->
-                case newByteArray# (len# +# 3#) s of
-                  (# s, mba# #) ->
-                    case writeWord8Array# mba# 0# (wordToWord8# 0x5F## {-_-}) s of
-                      s ->
-                        case writeWord8Array# mba# 1# (wordToWord8# 0x4D## {-M-}) s of
-                          s ->
-                            case writeWord8Array# mba# 2# (wordToWord8# 0x24##) s of
-                              s ->
-                                case copyByteArray# ba# 0# mba# 3# len# s of
-                                  s ->
-                                    case unsafeFreezeByteArray# mba# s of
-                                      (# s, ba# #) -> (# s, Utf8.Utf8 ba# #)
-            )
+      let
+        len# = sizeofByteArray# ba#
+      in
+      runST
+      (
+        ST $ \s ->
+          case newByteArray# (len# +# 3#) s of
+            (# s, mba# #) ->
+              case writeWord8Array# mba# 0# (wordToWord8# 0x5F## {-_-}) s of
+                s ->
+                  case writeWord8Array# mba# 1# (wordToWord8# 0x4D## {-M-}) s of
+                    s ->
+                      case writeWord8Array# mba# 2# (wordToWord8# 0x24##) s of
+                        s ->
+                          case copyByteArray# ba# 0# mba# 3# len# s of
+                            s ->
+                              case unsafeFreezeByteArray# mba# s of
+                                (# s, ba# #) -> (# s, Utf8.Utf8 ba# #)
+      )
+
 
 {-# NOINLINE blank #-}
 blank :: Name

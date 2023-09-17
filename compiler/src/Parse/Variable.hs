@@ -21,7 +21,7 @@ import qualified Data.Name as Name
 import qualified Data.Set as Set
 import Data.Word (Word8)
 import Foreign.Ptr (Ptr, plusPtr)
-import GHC.Exts (Char (C#), Int#, chr#, int8ToInt#, uncheckedIShiftL#, word8ToInt8#, (+#), (-#))
+import GHC.Exts (Char(C#), Int#, (+#), (-#), chr#, int8ToInt#, uncheckedIShiftL#, word8ToInt8#)
 import GHC.Word (Word8(W8#))
 
 import qualified AST.Source as Src
