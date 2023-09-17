@@ -6,8 +6,6 @@ export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 buildTag="elm-macos-arm64"
 
-export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
-
 ghcup install ghc 9.4.5 --set
 ghcup install cabal 3.6 --set
 
