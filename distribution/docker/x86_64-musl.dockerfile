@@ -19,7 +19,7 @@ RUN apk add --no-cache \
         zlib-static \
         curl
 
-RUN curl https://downloads.haskell.org/~ghcup/0.1.18.0/x86_64-linux-ghcup-0.1.18.0 -o /usr/local/bin/ghcup && chmod a+x /usr/local/bin/ghcup
+RUN curl https://downloads.haskell.org/~ghcup/0.1.19.4/x86_64-linux-ghcup-0.1.19.4 -o /usr/local/bin/ghcup && chmod a+x /usr/local/bin/ghcup
 
 # Setup GHC
 RUN ghcup install ghc 9.4.5 --set
