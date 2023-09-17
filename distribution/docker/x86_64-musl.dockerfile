@@ -23,7 +23,7 @@ RUN curl https://downloads.haskell.org/~ghcup/0.1.18.0/x86_64-linux-ghcup-0.1.18
 
 # Setup GHC
 RUN ghcup install ghc 9.4.5 --set
-RUN ghcup install cabal 3.6.2.0 --set
+RUN ghcup install cabal 3.8.1.0 --set
 
 ENV PATH="${PATH}:/root/.ghcup/bin"
 

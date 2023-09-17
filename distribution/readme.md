@@ -16,7 +16,7 @@ Distributions for the following architectures are currently supported:
 
 ### Pre-requisites
 
-- [ghcup](https://www.haskell.org/ghcup/) (scripts will attempt to install GHC 9.0.2 + Cabal 3.6.2.0)
+- [ghcup](https://www.haskell.org/ghcup/) (scripts will attempt to install GHC 9.4.5 + Cabal 3.8.1.0)
 - LLVM v13+ (MacOS arm64 only, suggest [homebrew](https://brew.sh/) `brew install llvm@13`)
 
 How to install these varies depending on your build host. [GHCup](https://www.haskell.org/ghcup/) is a convenient option for trying out multiple versions.
@@ -38,16 +38,16 @@ If you have an `arm64` mac and [Rosetta 2](https://support.apple.com/en-gb/HT211
 If you use `ghcup`, you can force install the x86 tools to replace the arm64 ones like follows:
 
 ```
-ghcup install ghc 9.0.2 --force -p x86_64-apple-darwin --set
-ghcup install cabal 3.6.2.0 --force -p x86_64-apple-darwin --set
-ghcup set ghc 9.0.2
+ghcup install ghc 9.4.5 --force -p x86_64-apple-darwin --set
+ghcup install cabal 3.8.1.0 --force -p x86_64-apple-darwin --set
+ghcup set ghc 9.4.5
 ```
 
 It seems ghcup doesn't currently support multi-arch installs. Check the arch of your currently installed binaries as follows:
 
 ```
 file ~/.ghcup/bin/cabal
-file ~/.ghcup/ghc/9.0.2/lib/ghc-9.0.2/bin/ghc
+file ~/.ghcup/ghc/9.4.5/lib/ghc-9.4.5/bin/ghc
 ```
 
 
