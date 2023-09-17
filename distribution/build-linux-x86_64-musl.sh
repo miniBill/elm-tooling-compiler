@@ -3,6 +3,11 @@ set -ex                                                   # Be verbose and exit 
 
 buildTag="elm-linux-x86_64-musl"
 
+export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
+
+ghcup install ghc 9.4.5 --set
+ghcup install cabal 3.6 --set
+
 scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cd "$scriptDir/.."                                        # Move into the project root

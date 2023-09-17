@@ -3,9 +3,10 @@ set -ex                                                   # Be verbose and exit 
 
 buildTag="elm-macos-x86_64"
 
-ghcup install ghc 9.0.2 --set
-ghcup install cabal 3.6.2.0 --set
+export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
+ghcup install ghc 9.4.5 --set
+ghcup install cabal 3.6 --set
 
 
 scriptDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
