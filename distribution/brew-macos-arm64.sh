@@ -10,7 +10,7 @@ export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 buildTag="elm-0.19.1-macos-arm64"
 
-ghcup install ghc 9.2.5 --set
+ghcup install ghc 9.4.5 --set
 ghcup install cabal 3.6 --set
 
 opt --version                                             # The arm64 build currently requires llvm until we get to GHC 9.4+
